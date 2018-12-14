@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using NUnit.Framework;
+using ServiceBusSample;
 
 namespace Tests
 {
@@ -10,9 +12,15 @@ namespace Tests
         }
 
         [Test]
-        public void GetSubscriptionList()
+        public async Task GetSubscriptionList()
         {
-            Assert.AreEqual(true, false);
+            var service = new ServiceBusService();
+            var subscriptionList = await service.GetSubscriptions("topic1");
+
+            Assert.AreEqual(3, subscriptionList.Count);
+            Assert.AreEqual("sub1", subscriptionList[0].Name);
+            Assert.AreEqual("sub2", subscriptionList[1].Name);
+            Assert.AreEqual("sub3", subscriptionList[2].Name);
         }
     }
 }
